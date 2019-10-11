@@ -474,8 +474,13 @@ module.exports = lines => {
   for (let i = 0; i * 6 < computedLines.length - 12; i += 1) {
     letterKey = computedLines.slice(i * 6, (i + 1) * 6).join('')
     keyIndex = WIDTH_TBL.indexOf(letterKey)
+    letterCodePrev = letterCode
     letterCode = lookupTBL[keyIndex]
     // sumOP += i * keyIndex
+
+    console.log('-', letterCode)
+
+    // TODO: Implement less used characters too
 
     switch (letterCode) {
       case 'Code A':
@@ -488,16 +493,25 @@ module.exports = lines => {
         lookupTBL = TBL_C
         break
       case 'FNC 4':
+      case 'Shift A':
+      case 'Shift B':
         break
       default:
         if (letterCode) {
-          if (letterCodePrev === 'FNC 4') {
-            code.push(letterCode.charCodeAt(0) + 128)
-          } else {
-            code.push(letterCode)
+          switch (letterCodePrev) {
+            case 'FNC 4':
+              code.push(letterCode.charCodeAt(0) + 128)
+              break
+            case 'Shift A':
+              code.push(TBL_A[keyIndex])
+              break
+            case 'Shift B':
+              code.push(TBL_B[keyIndex])
+              break
+            default:
+              code.push(letterCode)
+              break
           }
-
-          letterCodePrev = letterCode
         } else {
           // console.info(i, letterKey, keyIndex, letterCode)
 

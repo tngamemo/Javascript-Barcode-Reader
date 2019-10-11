@@ -188,48 +188,63 @@ function applyAdaptiveThreshold(data, width, height) {
 }
 
 /**
- * Threshold image data
+ * Apply median filter to image
  * @param {number[]} data Raw pixel data
  * @param {number} width Width fo image data
  * @param {number} height Height of image data
  * @returns {number[]} Pixel Data
  */
-// function applyMedianFilter(data, width, height) {
-//   const channels = data.length / (width * height)
-//   let window = [
-//     [-1, -1],
-//     [-1, 0],
-//     [-1, 1],
-//     [0, -1],
-//     [0, 0],
-//     [0, 1],
-//     [1, -1],
-//     [1, 0],
-//     [1, 1],
-//   ]
+function applyMedianFilter(data, width, height) {
+  const channels = data.length / (width * height)
+  let window = [
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, -1],
+    [0, 0],
+    [0, 1],
+    [1, -1],
+    [1, 0],
+    [1, 1],
+  ]
 
-//   for (let col = 1; col < width - 1; col += 1) {
-//     for (let row = 1; row < height - 1; row += 1) {
-//       let i = (row * width + col) * channels
-//       let arr = []
+  for (let col = 1; col < width - 1; col += 1) {
+    for (let row = 1; row < height - 1; row += 1) {
+      let i = (row * width + col) * channels
+      let arrR = []
+      let arrG = []
+      let arrB = []
 
-//       for (let z = 0; z < window.length; z += 1) {
-//         let i = ((row + window[z][0]) * width + (col + window[z][1])) * channels
-//         let v = (data[i] + data[i + 1] + data[i + 2]) / 3
+      for (let z = 0; z < window.length; z += 1) {
+        let i = ((row + window[z][0]) * width + (col + window[z][1])) * channels
 
-//         arr.push(v)
-//       }
+        arrR.push(data[i])
+        arrG.push(data[i + 1])
+        arrB.push(data[i + 2])
+      }
 
-//       let v = arr.sort((a, b) => a - b)[5]
+      arrR.sort((a, b) => b - a)
+      arrG.sort((a, b) => b - a)
+      arrB.sort((a, b) => b - a)
 
-//       data[i] = v > 127 ? 255 : 0
-//       data[i + 1] = v > 127 ? 255 : 0
-//       data[i + 2] = v > 127 ? 255 : 0
-//     }
-//   }
+      let vR = arrG[5]
+      let vG = arrB[5]
+      let vB = arrB[5]
 
-//   return data
-// }
+      let avg = (vR + vG + vB) / 3
+
+      data[i] = avg
+      data[i + 1] = avg
+      data[i + 2] = avg
+
+      // data[i] = vR > 127 ? 255 : 0
+      // data[i + 1] = vG > 127 ? 255 : 0
+      // data[i + 2] = vB > 127 ? 255 : 0
+    }
+  }
+
+  return data
+}
 
 /**
  * Threshold image data
@@ -281,7 +296,7 @@ function getLines(data, width, height) {
     }
 
     // atleast 75% of the pixels are same in column
-    colAvg = colSum / height > 190 ? 255 : 0
+    colAvg = colSum / height > 127 ? 255 : 0
 
     // skip white epadding in the start
     if (count === 0 && colAvg === 255) continue
@@ -321,10 +336,10 @@ function combineAllPossible(finalResult, result) {
 }
 
 module.exports = {
+  applyAdaptiveThreshold,
+  applyMedianFilter,
+  applySimpleThreshold,
+  combineAllPossible,
   getImageDataFromSource,
   getLines,
-  applySimpleThreshold,
-  applyAdaptiveThreshold,
-  combineAllPossible,
-  // applyMedianFilter,
 }

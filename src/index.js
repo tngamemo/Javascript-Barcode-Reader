@@ -40,16 +40,19 @@ async function javascriptBarcodeReader(image, options) {
   let { data, width, height } = await UTILITIES.getImageDataFromSource(image)
   const channels = data.length / (width * height)
 
+  // apply median filter
+  // UTILITIES.applyMedianFilter(data, width, height)
+
   // apply adaptive threshold
   if (options.useAdaptiveThreshold) {
-    data = UTILITIES.applyAdaptiveThreshold(data, width, height)
+    // UTILITIES.applyAdaptiveThreshold(data, width, height)
   }
 
   // check points for barcode location
   const sPoints = [5, 6, 4, 7, 3, 8, 2, 9, 1]
   const slineStep = Math.round(height / sPoints.length)
   //should be odd number to be able to find center
-  const rowsToScan = Math.min(3, height)
+  const rowsToScan = Math.min(5, height)
 
   for (let i = 0; i < sPoints.length; i += 1) {
     const sPoint = sPoints[i]
@@ -58,7 +61,7 @@ async function javascriptBarcodeReader(image, options) {
     let dataSlice = data.slice(start, end)
 
     if (!options.useAdaptiveThreshold) {
-      dataSlice = UTILITIES.applySimpleThreshold(dataSlice, width, rowsToScan)
+      UTILITIES.applySimpleThreshold(dataSlice, width, rowsToScan)
     }
 
     const lines = UTILITIES.getLines(dataSlice, width, rowsToScan)

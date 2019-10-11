@@ -259,17 +259,17 @@ describe('extract barcode after applying adaptive threhsold', () => {
   })
 })
 
-describe('extract barcode from remote URL', () => {
-  test('should detect barcode 93 from remote url', async () => {
-    const result = await jbr(
-      'https://upload.wikimedia.org/wikipedia/en/a/a9/Code_93_wikipedia.png',
-      {
-        barcode: 'code-93',
-      }
-    )
-    expect(result).toBe('WIKIPEDIA')
-  })
-})
+// describe('extract barcode from remote URL', () => {
+//   test('should detect barcode 93 from remote url', async () => {
+//     const result = await jbr(
+//       'https://upload.wikimedia.org/wikipedia/en/a/a9/Code_93_wikipedia.png',
+//       {
+//         barcode: 'code-93',
+//       }
+//     )
+//     expect(result).toBe('WIKIPEDIA')
+//   })
+// })
 
 describe('Fails', () => {
   test('throws when no barcode specified', async () => {
