@@ -6,6 +6,7 @@ Simple & Fast Barcode decoder for Browsers and Node.js capapable of reading Code
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/adf93fc22bd3479da66f3d4c74a0b95f)](https://app.codacy.com/app/mubaidr/Javascript-Barcode-Reader?utm_source=github.com&utm_medium=referral&utm_content=mubaidr/Javascript-Barcode-Reader&utm_campaign=Badge_Grade_Dashboard)
 [![codecov](https://codecov.io/gh/mubaidr/Javascript-Barcode-Reader/branch/master/graph/badge.svg)](https://codecov.io/gh/mubaidr/Javascript-Barcode-Reader)
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/96874363-1c80-44b8-9440-ae2f6a347d61/deploy-status)](https://app.netlify.com/sites/wonderful-lumiere-8d83b9/deploys)
 
 [![NPM](https://nodei.co/npm/javascript-barcode-reader.png)](https://nodei.co/npm/javascript-barcode-reader/)
 
