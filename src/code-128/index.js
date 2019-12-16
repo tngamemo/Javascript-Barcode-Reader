@@ -478,9 +478,7 @@ module.exports = lines => {
     letterCode = lookupTBL[keyIndex]
     // sumOP += i * keyIndex
 
-    console.log('-', letterCode)
-
-    // TODO: Implement less used characters too
+    // console.log('-', letterCode)
 
     switch (letterCode) {
       case 'Code A':
